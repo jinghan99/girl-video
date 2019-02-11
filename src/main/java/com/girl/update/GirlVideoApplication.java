@@ -2,6 +2,7 @@ package com.girl.update;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 /**
  * @Description: @EnableScheduling 注解即可开启定时任务
@@ -9,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @date: 2019/1/25 15:35
  */
 @EnableScheduling
-@SpringBootApplication
 public class GirlVideoApplication {
 
 	public static void main(String[] args) {

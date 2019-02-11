@@ -1,5 +1,7 @@
 package com.girl.update.task;
 
+import com.girl.update.utils.FileUtils;
+import com.girl.update.utils.PropertiesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -26,7 +28,7 @@ public class VideoTask {
     @Scheduled(cron = "0 0 0/1 * * ? ")
     public void getUpdateInfo() {
         logger.info("每小时执行一次！");
-
+        FileUtils.getFileList(PropertiesUtils.getInstance().get("download_video_dir"));
     }
 
 

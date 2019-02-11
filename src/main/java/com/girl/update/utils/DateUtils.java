@@ -1,11 +1,11 @@
 package com.girl.update.utils;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * 日期处理
- * @author zcl<yczclcn@163.com>
  */
 public class DateUtils {
 	
@@ -20,6 +20,12 @@ public class DateUtils {
 	
 	/** 时间格式(yyyy年M月dd日 ah:mm:ss) 代码生成器使用 */
 	public final static String DATE_TIME_CHN_PATTERN = "yyyy年M月dd日 ah:mm:ss";
+
+
+	/**
+	 * 日期格式化对象
+	 */
+	public static final DateFormat MONTH_FORMAT = new SimpleDateFormat( "/yyyyMM/");
 
 	public static String format(Date date) {
 		return format(date, DATE_PATTERN);
