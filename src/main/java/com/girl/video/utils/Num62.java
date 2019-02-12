@@ -1,5 +1,7 @@
 package com.girl.video.utils;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -279,5 +281,7 @@ public class Num62 {
 	
 	public static void main(String[] args) {
 		System.out.println(longToN62(Long.MAX_VALUE));
+
+		System.out.println(RandomStringUtils.random(4, Num62.N36_CHARS));
 	}
 }
