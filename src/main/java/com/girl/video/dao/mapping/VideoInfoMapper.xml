@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.girl.video.dao.VideoInfoMapper">
+	
+	<select id="listForPage" resultType="VideoInfoEntity" flushCache="true">
+		SELECT
+			`video_id`, 
+			`video_name`, 
+			`create_time`, 
+			`video_type`, 
+			`video_url`
+		FROM
+			video_info
+		ORDER BY
+			video_id DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO video_info (
+			`video_id`, 
+			`video_name`, 
+			`create_time`, 
+			`video_type`, 
+			`video_url`
+		)
+		VALUES (
+			#{videoId}, 
+			#{videoName}, 
+			#{createTime}, 
+			#{videoType}, 
+			#{videoUrl}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="com.girl.video.db.entity.VideoInfoEntity">
+		SELECT
+			`video_id`, 
+			`video_name`, 
+			`create_time`, 
+			`video_type`, 
+			`video_url`
+		FROM
+			video_info
+		WHERE
+			video_id = #{videoId}
+	</select>
+	
+	<update id="update">
+		UPDATE video_info
+	 	<set>
+			<if test="videoName != null">`video_name` = #{videoName}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="videoType != null">`video_type` = #{videoType}, </if>
+			<if test="videoUrl != null">`video_url` = #{videoUrl}</if>
+		</set>
+		WHERE
+			video_id = #{videoId}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			video_info
+		WHERE
+			video_id IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+</mapper>

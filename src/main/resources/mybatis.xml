@@ -3,11 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+
     <properties>
-        <property name="dialectClass" value="com.girl.update.db.dialect.MySql5Dialect"/>
+        <property name="dialectClass" value="com.girl.video.db.dialect.MySql5Dialect"/>
     </properties>
-	
-	<!-- 配置mybatis的缓存，延迟加载等等一系列属性 -->
+
+    <!-- 配置mybatis的缓存，延迟加载等等一系列属性 -->
     <settings>
 
         <!-- 全局映射器启用缓存 -->
@@ -55,10 +56,16 @@
         <setting name="aggressiveLazyLoading" value="false"/>
 
     </settings>
-    
+
+
+    <typeAliases>
+        <package name="com.girl.video.db.entity"/>
+    </typeAliases>
+
+
     <plugins>
-        <plugin interceptor="com.girl.update.db.PaginationResultSetHandlerInterceptor"/>
-        <plugin interceptor="com.girl.update.db.PaginationStatementHandlerInterceptor"/>
+        <plugin interceptor="com.girl.video.db.PaginationResultSetHandlerInterceptor"/>
+        <plugin interceptor="com.girl.video.db.PaginationStatementHandlerInterceptor"/>
     </plugins>
-    
+
 </configuration>
