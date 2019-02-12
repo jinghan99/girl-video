@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @date: 2019/1/25 15:35
  */
 @EnableScheduling
+@SpringBootApplication
 public class GirlVideoApplication {
 
 	public static void main(String[] args) {
