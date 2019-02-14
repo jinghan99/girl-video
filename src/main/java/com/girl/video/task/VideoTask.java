@@ -35,7 +35,7 @@ public class VideoTask {
      * 获取信息
      * 每小时执行
      */
-    @Scheduled(cron = "0 0 0/1 * * ? ")
+    @Scheduled(cron = "0/1 0/1 * * * ? ")
     public void getUpdateInfo() {
         logger.info("每小时执行一次！");
         List<File> downloadVideoDirList = FileUtils.getFileList(PropertiesUtils.getInstance().get("download_video_dir"));
@@ -49,15 +49,11 @@ public class VideoTask {
                 videoInfoEntity.setCreateTime(new Date());
                 videoInfoEntity.setVideoName(file.getName());
                 videoInfoEntity.setVideoType("");
-                videoInfoEntity.setVideoUrl(formatDirPath+file.getName());
+                videoInfoEntity.setVideoUrl("/upload"+formatDirPath+file.getName());
                 videoInfoService.saveVideoInfo(videoInfoEntity);
             }
         }
     }
-
-
-
-
 }
 
 

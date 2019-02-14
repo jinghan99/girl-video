@@ -82,9 +82,12 @@ public class FileUtils {
                 logger.info("文件移动成功！文件名：《{}》 目标路径：{}",fileName,endPath);
                 return true;
             } else {
-                logger.error("File is failed to move!");
                 logger.info("文件移动失败！文件名：《{}》 起始路径：{}",fileName,endPath);
-                delFile(startPath);
+                File fileEnd = new File(endPath);
+                if(fileEnd.exists()){
+                    logger.error("文件已经存在!");
+                    delFile(startPath);
+                }
                 return false;
             }
         } catch (Exception e) {
@@ -158,12 +161,8 @@ public class FileUtils {
             String startPath = file.getAbsolutePath();
 
             String  formatDirPath = DateUtils.MONTH_FORMAT.format(new Date()) ;
-
-
             String endPath = FileUtils.generateFilename(formatDirPath,file.getName());
             Boolean moveBoolean = FileUtils.moveToFolders(startPath, file.getName(), endPath);
-
-
 
             if(moveBoolean){
                 VideoInfoEntity videoInfoEntity = new VideoInfoEntity();

@@ -1,6 +1,7 @@
 package com.girl.video.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,19 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date 2017年8月9日 下午3:33:00
  */
 @Controller
-public class PageController {
+public class PageController extends AbstractController {
 
 	/**
 	 * 页面跳转
 	 * @param module
-	 * @param function
 	 * @param url
 	 * @return
 	 */
-	@RequestMapping("{module}/{function}/{url}.html")
-	public String page(@PathVariable("module") String module, @PathVariable("function") String function,
-                       @PathVariable("url") String url) {
-		return module + "/" + function + "/" + url + ".html";
+	@GetMapping("{module}/{url}.html")
+	public String page(@PathVariable("module") String module,  @PathVariable("url") String url) {
+		return module+"/" +url;
 	}
 
 }

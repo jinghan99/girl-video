@@ -20,6 +20,7 @@ import java.util.Map;
  * @date 2019/2/11 15:09
  */
 @RestController
+@RequestMapping("/video")
 public class VideoController {
 
     @Autowired
