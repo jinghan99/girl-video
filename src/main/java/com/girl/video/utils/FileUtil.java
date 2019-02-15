@@ -2,6 +2,7 @@ package com.girl.video.utils;
 
 import com.girl.video.db.entity.VideoInfoEntity;
 import com.girl.video.task.VideoTask;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
  * @author: jingh
  * @date 2019/2/11 15:33
  */
-public class FileUtils {
+public class FileUtil {
 
     private final static Logger logger = LoggerFactory.getLogger(VideoTask.class);
     /**
@@ -29,15 +30,21 @@ public class FileUtils {
     public static List<File> getFileList(String path) {
         List<File> fileList = new ArrayList<>();
         File dir = new File(path);
-        File[] files = dir.listFiles(); // 该文件目录下文件全部放入数组
-        if (files != null) {
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].isDirectory()) { // 判断是文件还是文件夹
-                    getFileList(files[i].getAbsolutePath()); // 获取文件绝对路径
-                } else if (isVideo(files[i])) { // 是否视频文件
-                    fileList.add(files[i]);
-                } else {
-                    continue;
+        logger.info("path:"+path);
+        System.out.println("{/home/cloud/downloads} dir.exists() : " +dir.exists());
+        if(dir.exists()){
+            File[] files = dir.listFiles(); // 该文件目录下文件全部放入数组
+            System.out.println("files.length : "+files.length);
+            logger.info("dir.listFiles() length:"+dir.listFiles().length);
+            if (files != null) {
+                for (int i = 0; i < files.length; i++) {
+                    if (files[i].isDirectory()) { // 判断是文件还是文件夹
+                        getFileList(files[i].getAbsolutePath()); // 获取文件绝对路径
+                    } else if (isVideo(files[i])) { // 是否视频文件
+                        fileList.add(files[i]);
+                    } else {
+                        continue;
+                    }
                 }
             }
         }
@@ -77,24 +84,24 @@ public class FileUtils {
     public static Boolean moveToFolders(String startPath, String fileName, String endPath){
         try {
             File startFile = new File(startPath);
-            logger.info("文件移动中--- 文件名：《{}》 目标路径：{}",fileName,endPath);
-            if (startFile.renameTo(new File(endPath))) {
-                logger.info("文件移动成功！文件名：《{}》 目标路径：{}",fileName,endPath);
-                return true;
-            } else {
-                logger.info("文件移动失败！文件名：《{}》 起始路径：{}",fileName,endPath);
-                File fileEnd = new File(endPath);
-                if(fileEnd.exists()){
+            File fileEnd = new File(endPath);
+            if(fileEnd.exists()){
                     logger.error("文件已经存在!");
+
                     delFile(startPath);
-                }
-                return false;
+            }else{
+                logger.info("文件移动中--- 文件名：《{}》 目标路径：{}",fileName,endPath);
+                FileUtils.copyFile(startFile, new File(endPath));
+                logger.info("文件移动完成--- 文件名：《{}》 目标路径：{}",fileName,endPath);
             }
+            return true;
         } catch (Exception e) {
-            logger.info("文件移动异常！文件名：《{}》 起始路径：{}",fileName,endPath);
+            logger.error("文件移动异常！文件名：《{}》 起始路径：{}",fileName,startPath);
+            logger.error(e.toString(),e);
             return false;
         }
     }
+
 
 
     /**
@@ -156,13 +163,13 @@ public class FileUtils {
 
 
     public static void main(String[] args) {
-        List<File> downloadVideoDirList = FileUtils.getFileList(PropertiesUtils.getInstance().get("download_video_dir"));
+        List<File> downloadVideoDirList = FileUtil.getFileList(PropertiesUtils.getInstance().get("download_video_dir"));
         for(File file : downloadVideoDirList){
             String startPath = file.getAbsolutePath();
 
             String  formatDirPath = DateUtils.MONTH_FORMAT.format(new Date()) ;
-            String endPath = FileUtils.generateFilename(formatDirPath,file.getName());
-            Boolean moveBoolean = FileUtils.moveToFolders(startPath, file.getName(), endPath);
+            String endPath = FileUtil.generateFilename(formatDirPath,file.getName());
+            Boolean moveBoolean = FileUtil.moveToFolders(startPath, file.getName(), endPath);
 
             if(moveBoolean){
                 VideoInfoEntity videoInfoEntity = new VideoInfoEntity();

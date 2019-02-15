@@ -66,6 +66,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -122,6 +130,7 @@
 					<include>**/*.xml</include>
 					<include>**/*.yml</include>
 					<include>**/*.properties</include>
+					<include>**</include>
 				</includes>
 			</resource>
 		</resources>

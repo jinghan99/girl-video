@@ -3,7 +3,7 @@ package com.girl.video.task;
 import com.girl.video.db.entity.VideoInfoEntity;
 import com.girl.video.service.VideoInfoService;
 import com.girl.video.utils.DateUtils;
-import com.girl.video.utils.FileUtils;
+import com.girl.video.utils.FileUtil;
 import com.girl.video.utils.PropertiesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,15 +34,19 @@ public class VideoTask {
      * 获取信息
      * 每小时执行
      */
-    @Scheduled(cron = "0/1 0 0/1 * * ?  ")
+    @Scheduled(cron = "0 0 0/1 * * ? ")
     public void getUpdateInfo() {
         logger.info("每小时执行一次！");
-        List<File> downloadVideoDirList = FileUtils.getFileList(PropertiesUtils.getInstance().get("download_video_dir"));
+        logger.info("PropertiesUtils.getInstance()" + PropertiesUtils.getInstance().toString());
+        List<File> downloadVideoDirList = FileUtil.getFileList(PropertiesUtils.getInstance().get("download_video_dir"));
+        logger.info("List<File> size: "+downloadVideoDirList.size());
         for(File file : downloadVideoDirList){
             String startPath = file.getAbsolutePath();
+            logger.info("startPath ！" +startPath);
             String  formatDirPath = DateUtils.MONTH_FORMAT.format(new Date()) ;
-            String endPath = FileUtils.generateFilename(formatDirPath,file.getName());
-            Boolean moveBoolean = FileUtils.moveToFolders(startPath, file.getName(), endPath);
+            String endPath = FileUtil.generateFilename(formatDirPath,file.getName());
+            logger.info("endPath ！" +endPath);
+            Boolean moveBoolean = FileUtil.moveToFolders(startPath, file.getName(), endPath);
             if(moveBoolean){
                 VideoInfoEntity videoInfoEntity = new VideoInfoEntity();
                 videoInfoEntity.setCreateTime(new Date());
