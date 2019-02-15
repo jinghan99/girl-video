@@ -30,12 +30,11 @@ public class VideoTask {
     @Autowired
     private VideoInfoService videoInfoService;
 
-
     /**
      * 获取信息
      * 每小时执行
      */
-    @Scheduled(cron = "0/1 0/1 * * * ? ")
+    @Scheduled(cron = "0/1 0 0/1 * * ?  ")
     public void getUpdateInfo() {
         logger.info("每小时执行一次！");
         List<File> downloadVideoDirList = FileUtils.getFileList(PropertiesUtils.getInstance().get("download_video_dir"));

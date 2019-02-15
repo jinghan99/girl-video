@@ -5,19 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" type="text/css" href="/css/iview.css">
+    <link rel="stylesheet" type="text/css" href="/plugs/vide7.4.1/css/video-js.min.css">
 </head>
-<body >
+<body style="background-color: #f7dad2">
 <div id="app">
-
-    <Row  v-for="(item, index) in videoList" key="index">
-
-        <i-col span="12"> <span>{{item.videoName}}</span></i-col>
+    <Row type="flex" justify="center" align="middle" v-for="(item, index) in videoList" key="index">
 
         <i-col span="12">
-            <div style="height: 200px;background-color: #725b5a" >
-                <video :src="item.videoUrl"  style="height: 150px;background-color: #8ce6b0"></video>
+            <div><span style="font-size: 20px">{{item.videoName}}</span></div>
+            <div style="height: 200px" >
+                <video :src="item.videoUrl" controls  style="height: 150px;"></video>
             </div>
+
         </i-col>
+
     </Row>
 
     <Page :total="page.total" :current="page.pageNumber" :page-size="page.pageSize" @on-change="pageChange"  ></Page>
@@ -27,6 +28,7 @@
 <script src="/libs/jquery.min.js"></script>
 <script type="text/javascript" src="/js/vue.min.js"></script>
 <script type="text/javascript" src="/js/iview.min.js"></script>
+<script type="text/javascript" src="/plugs/vide7.4.1/js/video.min.js"></script>
 <script>
     var vm =new Vue({
         el: '#app',
@@ -34,7 +36,7 @@
             visible: false,
             page:{
                 pageNumber:1,
-                pageSize:10,
+                pageSize:5,
                 total:10
             },
             videoList:[]
@@ -63,6 +65,7 @@
                 $.ajax({
                     url : '/video/list',
                     type : "post",
+                    contentType : 'application/json',
                     data : JSON.stringify(vm.page),
                     success : function(data) {
                         vm.videoList = data.rows;
