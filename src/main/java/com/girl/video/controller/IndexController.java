@@ -16,7 +16,7 @@ public class IndexController extends AbstractController {
 
     @GetMapping("/")
     public String index() {
-        return "index.html";
+        return "video/video_list.html";
     }
 
 

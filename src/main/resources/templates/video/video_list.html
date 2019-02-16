@@ -4,8 +4,8 @@
     <meta charset="UTF-8"></meta>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" type="text/css" href="/css/iview.css">
-    <link rel="stylesheet" type="text/css" href="/plugs/vide7.4.1/css/video-js.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/iview.css">
+    <link rel="stylesheet" type="text/css" href="/static/plugs/vide7.4.1/css/video-js.min.css">
 </head>
 <body style="background-color: #f7dad2">
 <div id="app">
@@ -21,14 +21,14 @@
 
     </Row>
 
-    <Page :total="page.total" :current="page.pageNumber" :page-size="page.pageSize" @on-change="pageChange"  ></Page>
+    <Page :total="page.total" :current="page.pageNumber" :page-size="page.pageSize" @on-change="pageChange"  prev-text="上一页" next-text="下一页"></Page>
 </div>
 
 </body>
-<script src="/libs/jquery.min.js"></script>
-<script type="text/javascript" src="/js/vue.min.js"></script>
-<script type="text/javascript" src="/js/iview.min.js"></script>
-<script type="text/javascript" src="/plugs/vide7.4.1/js/video.min.js"></script>
+<script src="/static/libs/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/vue.min.js"></script>
+<script type="text/javascript" src="/static/js/iview.min.js"></script>
+<script type="text/javascript" src="/static/plugs/vide7.4.1/js/video.min.js"></script>
 <script>
     var vm =new Vue({
         el: '#app',

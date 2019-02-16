@@ -34,7 +34,6 @@ public class FileUtil {
         System.out.println("{/home/cloud/downloads} dir.exists() : " +dir.exists());
         if(dir.exists()){
             File[] files = dir.listFiles(); // 该文件目录下文件全部放入数组
-            System.out.println("files.length : "+files.length);
             logger.info("dir.listFiles() length:"+dir.listFiles().length);
             if (files != null) {
                 for (int i = 0; i < files.length; i++) {
@@ -58,9 +57,14 @@ public class FileUtil {
      */
     public static boolean isVideo(File file)  {
 //        .mp4 结尾 或 .flv 结尾 等等
-        String reg = "(.mp4$|.flv$|.avi$|.rm$|.rmvb$|.wmv$|.avi$)";
+        String reg = "(.mp4$|.flv$|.avi$|.rm$|.mkv$|.rmvb$|.wmv$|.avi$)";
         Pattern p = Pattern.compile(reg);
-        return p.matcher(file.getName()).find();
+        if(p.matcher(file.getName()).find()){
+            logger.info("判断文件是否视频文件 true--- 文件名：《{}》  ",file.getName());
+            return true;
+        }
+        logger.info("判断文件是否视频文件 false--- 文件名：《{}》  ",file.getName());
+        return false;
     }
     /**
      * 大批量移动文件至 目标文件夹
