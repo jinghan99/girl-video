@@ -27,8 +27,7 @@ public class FileUtil {
      * @param
      * @return
      */
-    public static List<File> getFileList(String path) {
-        List<File> fileList = new ArrayList<>();
+    public static void getFileList( List<File> fileList,String path) {
         File dir = new File(path);
         logger.info("path:"+path);
         System.out.println("{/home/cloud/downloads} dir.exists() : " +dir.exists());
@@ -38,7 +37,7 @@ public class FileUtil {
             if (files != null) {
                 for (int i = 0; i < files.length; i++) {
                     if (files[i].isDirectory()) { // 判断是文件还是文件夹
-                        getFileList(files[i].getAbsolutePath()); // 获取文件绝对路径
+                        getFileList(fileList,files[i].getAbsolutePath()); // 获取文件绝对路径
                     } else if (isVideo(files[i])) { // 是否视频文件
                         fileList.add(files[i]);
                     } else {
@@ -47,7 +46,6 @@ public class FileUtil {
                 }
             }
         }
-        return fileList;
     }
 
     /**
@@ -167,22 +165,7 @@ public class FileUtil {
 
 
     public static void main(String[] args) {
-        List<File> downloadVideoDirList = FileUtil.getFileList(PropertiesUtils.getInstance().get("download_video_dir"));
-        for(File file : downloadVideoDirList){
-            String startPath = file.getAbsolutePath();
 
-            String  formatDirPath = DateUtils.MONTH_FORMAT.format(new Date()) ;
-            String endPath = FileUtil.generateFilename(formatDirPath,file.getName());
-            Boolean moveBoolean = FileUtil.moveToFolders(startPath, file.getName(), endPath);
-
-            if(moveBoolean){
-                VideoInfoEntity videoInfoEntity = new VideoInfoEntity();
-                videoInfoEntity.setCreateTime(new Date());
-                videoInfoEntity.setVideoName(file.getName());
-                videoInfoEntity.setVideoType("");
-                videoInfoEntity.setVideoUrl(formatDirPath+file.getName());
-            }
-        }
     }
 
 

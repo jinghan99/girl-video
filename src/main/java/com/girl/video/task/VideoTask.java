@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,8 @@ public class VideoTask {
     public void getUpdateInfo() {
         logger.info("每小时执行一次！");
         logger.info("PropertiesUtils.getInstance()" + PropertiesUtils.getInstance().toString());
-        List<File> downloadVideoDirList = FileUtil.getFileList(PropertiesUtils.getInstance().get("download_video_dir"));
+        List<File> downloadVideoDirList = new ArrayList<>();
+        FileUtil.getFileList(downloadVideoDirList,PropertiesUtils.getInstance().get("download_video_dir"));
         logger.info("List<File> size: "+downloadVideoDirList.size());
         for(File file : downloadVideoDirList){
             String startPath = file.getAbsolutePath();
